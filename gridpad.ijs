@@ -146,15 +146,15 @@ img_draw =: verb define
 gpw =: verb define
   NB. set img to y and bring gpw window to front.
   NB. optional x argument is window position
-  0 0 gpw y
+  '' gpw y
 :
-  render img =: y
+  if. y -.@-: '' do. render img =: y end.
   wd'psel ',":gpw_hwnd
-  wd'pmove ',(":x),' 0 0'
+  if. x -.@-: '' do. wd'pmove ',(":x),' 0 0' end.
   wd'ptop'
 )
 
-
+1920 1080 gpw i. 16 16
 NB. -- parent event handler ---------------------------------
 
 gpw_timer =: verb define
