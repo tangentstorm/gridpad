@@ -20,6 +20,7 @@ gpo_init_xy =: 10 500
 gpo_timer =: 100
 gpo_palv_wh =: 25 400
 gpo_imgv_wh =: 480 480
+gpo_bg =: _1                        NB. new image background color
 gpo_statusbar =: 1                  NB. show status bar?
 gpo_showgrid =: 1                   NB. show the grid by default? (can toggle at runtime)
 gpo_gridrgb =: 255 255 255          NB. grid color
@@ -107,7 +108,7 @@ subdivide =: 2&([ #"0 1 #"0 2)
 
 draw_transparency =: verb define
   transparent =. 2 2 $ TRANSPARENT
-  checkerboard =. 016b777777 *1+ *3|i. 2 2
+  checkerboard =. 016b333333 *1+ *3|i. 2 2
   NB. cut and then re-assemble image y
   t =. (2 2,:2 2) <@(checkerboard"_^:(transparent-:]));.3 y
   |:,./><@;"1 t
@@ -292,7 +293,7 @@ gpw_palv_mbrup =: verb define
 NB. -- menu handlers ----------------------------------------
 
 gpw_new_button =: verb define
-  render img =: ($img) $ 0
+  render img =: ($img) $ gpo_bg
 )
 
 gpw_dir =: verb define
