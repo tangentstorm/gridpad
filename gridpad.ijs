@@ -154,7 +154,6 @@ gpw =: verb define
   wd'ptop'
 )
 
-1920 1080 gpw i. 16 16
 NB. -- parent event handler ---------------------------------
 
 gpw_timer =: verb define
