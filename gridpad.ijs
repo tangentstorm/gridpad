@@ -126,12 +126,13 @@ render =: gpw_render0 =: verb define
 )
 
 
-whichbox =: verb define                   NB. which cell is the mouse over?
-  |. <. y %~ 2 {. ".sysdata               NB. (only works inside mouse events)
+whichbox =: verb define              NB. which cell is the mouse over?
+  |. <. y %~ 2 {. ".sysdata          NB. (only works inside mouse events)
 )
 
-mbl =: verb : '4 { ".sysdata'             NB. left mouse button
-
+mbl =: {{ 4 { 0".sysdata }}          NB. left mouse button
+mbr =: {{ 8 { 0".sysdata }}          NB. right mouse button (may need to be 5 for 2 button mouse?)
+                                     NB. https://code.jsoftware.com/wiki/User:Raul_Miller/J_Event_Handlers
 
 inbounds =: dyad define
   *./ (x >: 0) *. x < y
@@ -140,8 +141,10 @@ inbounds =: dyad define
 pen_color =: verb define
   NB. this is so you can apply custom mappings between the
   NB. representation in the palette view and the underlying
-  NB. data in the image.
-  pen { pal
+  NB. data in the image. By default, we eithenr extract from
+  NB. the palette using an index, or allow _1 to pass through
+  NB. for transparent background.
+  if. pen > 0 do. pen { pal else. pen end.
 )
 
 img_draw =: verb define
@@ -233,12 +236,20 @@ gpw_imgv_mblup =: verb define
 )
 
 gpw_imgv_mmove =: verb define
-  if. gpo_statusbar do. wd 'set sb setlabel text *', ": whichbox imgv_cellsize'' end.
+  if. gpo_statusbar do. wd 'set sb setlabel text *', sysdata[ ": whichbox imgv_cellsize'' end.
   if. mbl'' do. gpw_imgv_mblup'' end.
+  if. mbr'' do. gpw_imgv_mbrup'' end.
 )
 
 imgv_cellsize =: verb define
   (glqwh glsel'imgv') % |.$ img
+)
+
+gpw_imgv_mbrup =: verb define
+  tmp =. pen
+  pen =: _1
+  gpw_imgv_mblup''
+  pen =. tmp
 )
 
 
