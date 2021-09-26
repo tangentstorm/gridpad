@@ -101,10 +101,22 @@ NB. -- general routines -------------------------------------
 
 update =: ]
 
+TRANSPARENT =: _1
+
+subdivide =: 2&([ #"0 1 #"0 2)
+
+draw_transparency =: verb define
+  transparent =. 2 2 $ TRANSPARENT
+  checkerboard =. 016b777777 *1+ *3|i. 2 2
+  NB. cut and then re-assemble image y
+  t =. (2 2,:2 2) <@(checkerboard"_^:(transparent-:]));.3 y
+  |:,./><@;"1 t
+)
 
 NB. gpw_render is here so you can call it without having to fiddle with locales.
 render =: gpw_render0 =: verb define
-  vmcc img;'imgv'
+  im =. draw_transparency subdivide img
+  vmcc im;'imgv'
   if. gpo_showgrid do.
     'vw vh' =. glqwh glsel'imgv' [ 'ih iw' =. $ img
     glpen glrgb gpo_gridrgb
