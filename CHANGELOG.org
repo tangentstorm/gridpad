@@ -40,14 +40,56 @@ to re-use it as a library in the sandpile video, i made the following changes:
 - removed all keyboard events
 - added 'view' menu with option to toggle grid
 - timer is now sent through ~wd~'s ~ptimer~ command, so the tick handler is ~gpw_timer~
-- added a do-nothing ~update~ verb that you can override ~render~ and ~update~ stages separately.
+- added a do-nothing ~update~ verb so that you can override ~render~ and ~update~ stages separately.
 - the 'new' menu handler sets the image to all 0 instead of 16bffffff
 - consolidated the character handler functions into single ~gpw_char~ so you can override in one place.
 - ~gpw_render0~ and ~gpw_palv_paint0~ are aliases you can call from your own ~render~ and ~gpw_palv_paint~ routines, without having to mess with passing the right locale to vmcc.
 - all routines that assign to ~img~ now explicitly call ~render~ in case the timer is set to 0
-- add ~gpw_path~ to remember save location and added ~gpw_dir~ verb to get working directory
+- add ~gpw_path~ to remember the save location and add ~gpw_dir~ verb to get working directory
 - add an empty ~to_rgb~ verb you can override to map an indexed palette to rgb on render.
 - add an empty ~to_pal~ verb you can override to map (a)rgb back to an indexed palette on load.
 - extracted ~to_argb~ verb from the save routine so you can override it.
 - ~img_draw~ can now take a rank 2 array as the left argument to draw on that array instead of on ~img~
 - added ~gpw~ verb to quickly set img, re-render, and bring window to the front.
+
+* changes since sandpiles
+
+* 2021-9-26 livestream
+** DONE make a new repo for gridpad so people can install it on their own j installation.
+ |https://github.com/tangentstorm/gridpad
+ |
+** DONE changed gpw'' so that we can bring to front without resizing or setting image
+** DONE do a small code review so i can get back up to speed with how it works.
+ |(and fufill the promise of a code review video)
+ |
+** DONE drawing checkerboard for transparent background
+: 2&([ #"0 1 #) NB. verb to double the resolution of an image (subdivide)
+
+** DONE right mouse button to draw transparent pixels in the sprite
+** DONE fix keyboard shortcut (ctrl+g) for toggling the grid
+** DONE option =gpo_bg= for new image background color (and now defaults to _1)
+** DONE add some pre-made palettes
+** DONE middle-click acts as eyedropper
+
+** TODO animated sprites
+*** TODO onion skinning
+*** TODO animation preview
+*** TODO edit a rank 3 array
+*** TODO arrange the cells into a sprite sheet on save
+*** TODO load a sprite sheet
+*** TODO page through the cells of the sprite sheet / layers of the rank 3 array
+
+
+** TODO [#A] save transparent pixels
+need to handle the _1 in the save command.
+
+** TODO floodfill / paint bucket
+
+** TODO add code to re-color image using closest palette colors
+
+
+** TODO [#C] handle middle-click (eyedropper) on color that isn't in the palette
+(right now it just complains in the terminal)
+
+** TODO [#C] ability to save the palette
+just type 'pal' in the j terminal for now.
