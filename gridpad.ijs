@@ -37,18 +37,70 @@ gpo_menu =: noun define
   menupopz;
 )
 
+NB. -- palettes ---------------------------------------------
+NB. shamelessly stolen from https://github.com/JohnEarnest/ok/tree/gh-pages/ike
+
+parse_table =: {{ 0 ". > LF cut y -. CR }}
+
+NB. default palette (16-color vga text-mode palette)
+pal_vga =: ,parse_table 0 : 0
+16b000000 16baa0000 16b00aa00 16baa5500 16b0000aa 16baa00aa 16b00aaaa 16baaaaaa
+16b555555 16bff5555 16b55ff55 16bffff55 16b5555ff 16bff55ff 16b55ffff 16bffffff
+)
+
+NB. http://pixeljoint.com/forum/forum_posts.asp?TID=12795
+pal_dawnbringer =: ,parse_table 0 : 0
+16b140c1c 16b442434 16b30346d 16b4e4a4e 16b854c30 16b346524 16bd04648 16b757161
+16b597dce 16bd27d2c 16b8595a1 16b6daa2c 16bd2aa99 16b6dc2ca 16bdad45e 16bdeeed6
+)
+
+NB. http://androidarts.com/palette/16pal.htm
+pal_arne =: ,parse_table 0 : 0
+16b000000 16b9d9d9d 16bffffff 16bbe2633 16be06f8b 16b493c2b 16ba46422 16beb8931
+16bf7e26b 16b2f484e 16b44891a 16ba3ce27 16b1b2632 16b005784 16b31a2f2 16bb2dcef
+)
+
+
+NB. https://ethanschoonover.com/solarized/
+pal_solarized =: ,parse_table 0 : 0
+16b002b36 16b073642 16b586e75 16b657b83 16b839496 16b93a1a1 16beee8d5 16bfdf6e3
+16bb58900 16bcb4b16 16bdc322f 16bd33682 16b6c71c4 16b268bd2 16b2aa198 16b859900
+)
+
+pal_windows =: ,parse_table 0 : 0
+16bffffff 16bc0c0c0 16b808080 16b000000 16bff0000 16b00ff00 16bffff00 16b0000ff
+16bff00ff 16b00ffff 16b800000 16b008000 16b808000 16b000080 16b800080 16b008080
+)
+
+NB. https://www.lexaloffle.com/pico-8.php
+pal_pico =: ,parse_table 0 : 0
+16b000000 16b1d2b53 16b7e2553 16b008751 16bab5236 16b5f574f 16bc2c3c7 16bfff1e8
+16bff004d 16bffa300 16bffec27 16b00e436 16b29adff 16b83769c 16bff77ab 16bffccaa
+)
+
+pal_lcd =: ,parse_table 0 : 0
+16b0f380f 16b306230 16b8bac0f 16b9bbc0f
+)
+
+pal_cga =: ,parse_table 0 : 0
+16b000000 16bffffff 16b00ffff 16bff00ff
+)
+
+pal_hot =: ,parse_table 0 : 0
+16b000000 16bffffff 16bff0000 16bffff00
+)
+
+pal_names =: cut'cga hot lcd vga windows dawnbringer arne pico solarized'
+
+
+NB. -- initialization ---------------------------------------
+
 NB. default image.
 img =: 32 32 $ 0
 
-NB. default palette (16-color vga text-mode palette)
-pal =:      16b000000 16baa0000 16b00aa00 16baa5500
-pal =: pal, 16b0000aa 16baa00aa 16b00aaaa 16baaaaaa
-pal =: pal, 16b555555 16bff5555 16b55ff55 16bffff55
-pal =: pal, 16b5555ff 16bff55ff 16b55ffff 16bffffff
+pal =: pal_arne
 
 pen =: <: # pal  NB. start with last color (white)
-
-NB. -- initialization ---------------------------------------
 
 gpw_init =: verb define
   NB. TODO: take above configuration arguments as params
