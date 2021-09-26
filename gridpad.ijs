@@ -271,7 +271,7 @@ gpw_imgv_char =: gpw_palv_char =: verb define
 
 gpw_char =: verb define
   NB. TODO: keyboard handler.
-	return.
+  return.
 )
 
 NB. mouse wheel on either control rotates through palette
@@ -305,6 +305,15 @@ gpw_imgv_mbrup =: verb define
   pen =. tmp
 )
 
+gpw_imgv_mbmup =: verb define
+  NB. middle click to extract a color from image
+  yx =. whichbox imgv_cellsize''
+  c =. (<yx) { img
+  if. c e. pal do. pen =: pal i. c else.
+    smoutput 'color #',(hfd c),' is not in the palette.'
+  end.
+  glpaint glsel'palv'
+)
 
 
 NB. -- palette view -----------------------------------------
