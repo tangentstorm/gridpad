@@ -32,7 +32,7 @@ gpo_menu =: noun define
     menu save "&Save" "Ctrl+S";
   menupopz;
   menupop "&View";
-    menu grid "Toggle &Grid" "Ctrl-G";
+    menu grid "Toggle &Grid" "Ctrl+G";
   menupopz;
 )
 
