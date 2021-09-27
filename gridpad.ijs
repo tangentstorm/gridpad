@@ -42,8 +42,19 @@ NB. -- animation --------------------------------------------
 
 cel =: 0           NB. index of the current cel within cels
 cels =: 0 0 0 $ 0  NB. rank-3 array of 2d animation cels
-bak_cel =: {{ if. #cels do. img =: cels {~ cel =: 0>.cel-1 end. }}
-fwd_cel =: {{ if. #cels do. img =: cels {~ cel =: (<:#cels)<.cel+1 end. }}
+celsize =: 16 16
+
+bak_cel =: {{ if. #cels do. img =: cels {~ cel =: (#cels)|cel-1 end. }}
+fwd_cel =: {{ if. #cels do. img =: cels {~ cel =: (#cels)|cel+1 end. }}
+toggle_cels =: verb define
+  if. #cels do.
+    img =: ,./,./4 4 $ cels
+    cels =: 0 0 0 $ 0
+  else.
+    cels =: ,/> (,:~celsize) <;.3 img NB. sprite sheet cel extractor
+    fwd_cel cel =: <:(#cels)|cel  NB. fwd_cel actually triggers the extraction
+  end.
+)
 
 
 NB. -- palettes ---------------------------------------------
@@ -216,6 +227,7 @@ img_draw =: verb define
   NB. dyadic form uses img as a temp if there are multiple canvases (e.g., sandcalc)
   if. y inbounds $x do.
     render img =: (pen_color'') (< y) } x
+    if. #cels do. cels =: img cel } cels end.
   end.
   img
 )
@@ -282,6 +294,8 @@ gpw_char =: verb define
   select. y
   case. ',' do. bak_cel''
   case. '.' do. fwd_cel''
+  case. '''' do. toggle_cels''
+  case. do. smoutput 'gpw_char: ',sysdata
   end.
 )
 
