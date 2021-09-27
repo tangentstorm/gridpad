@@ -166,9 +166,11 @@ vmcc =: verb define                       NB. invoke viewmat in a child control
   glpaint glsel cc                        NB. pick child control name and repaint
 )
 
+opaque =: 255*2^24
 to_rgb =: ]                               NB. map img to rgb
-to_argb =: (255*2^24) + to_rgb            NB. and to argb for saving png files
-to_pal =: ]                               NB. hook for mapping rgb to indexed palette
+to_argb =: ~:&_1 * opaque + to_rgb        NB. and to argb for saving png files
+to_pal =: _1:^:(=0:)"0                    NB. hook for mapping rgb to indexed palette
+NB. by default, anything not completely opaque is completely transparent. (!!)
 
 NB. -- general routines -------------------------------------
 
