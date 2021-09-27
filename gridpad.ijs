@@ -37,6 +37,15 @@ gpo_menu =: noun define
   menupopz;
 )
 
+
+NB. -- animation --------------------------------------------
+
+cel =: 0           NB. index of the current cel within cels
+cels =: 0 0 0 $ 0  NB. rank-3 array of 2d animation cels
+bak_cel =: {{ if. #cels do. img =: cels {~ cel =: 0>.cel-1 end. }}
+fwd_cel =: {{ if. #cels do. img =: cels {~ cel =: (<:#cels)<.cel+1 end. }}
+
+
 NB. -- palettes ---------------------------------------------
 NB. shamelessly stolen from https://github.com/JohnEarnest/ok/tree/gh-pages/ike
 
@@ -270,8 +279,10 @@ gpw_imgv_char =: gpw_palv_char =: verb define
 )
 
 gpw_char =: verb define
-  NB. TODO: keyboard handler.
-  return.
+  select. y
+  case. ',' do. bak_cel''
+  case. '.' do. fwd_cel''
+  end.
 )
 
 NB. mouse wheel on either control rotates through palette
