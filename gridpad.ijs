@@ -266,7 +266,7 @@ NB. -- shared event handlers --------------------------------
 
 NB. keyboard events are widget-specific, but we want same for img/pal
 gpw_imgv_char =: gpw_palv_char =: verb define
-  gpw_char''  NB. this is so we can override in one place in the locale
+  gpw_char {. sysdata  NB. this is so we can override in one place in the locale
 )
 
 gpw_char =: verb define
