@@ -289,7 +289,7 @@ gpw_imgv_mblup =: verb define
 )
 
 gpw_imgv_mmove =: verb define
-  if. gpo_statusbar do. wd 'set sb setlabel text *', sysdata[ ": whichbox imgv_cellsize'' end.
+  if. gpo_statusbar do. wd 'set sb setlabel text *', ": whichbox imgv_cellsize'' end.
   if. mbl'' do. gpw_imgv_mblup'' end.
   if. mbr'' do. gpw_imgv_mbrup'' end.
 )
