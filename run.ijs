@@ -6,6 +6,7 @@ load 'd:/ver/gridpad/gridpad.ijs'
 coinsert 'gridpad'
 
 gpw_close^:(wdisparent'gpw')''
+gpo_imgv_wh =: 800 800
 gpw_init ''
 1920 1080 gpw''
 
@@ -37,4 +38,11 @@ imgtxt =: {{ {{pal i. 256 #. 256 256 256 #:y}}^:(-.@-:_1:)"0 img }}
 
 
 img =: 64 64 {.!._1 img  NB. auto-convert to spritesheet (for now)
-gpw_path =: 'e:/tmp/'
+gpw_path =: 'd:/ver/ld49/'
+
+NB. snippets for sprite editor macros
+shrt =: {{ 0 0$img =: _1 |."1 img }}
+shlf =: {{ 0 0$img =: 1 |."1 img }}
+shup =: {{ 0 0$img =: 1 |. img }}
+shdn =: {{ 0 0$img =: _1 |. img }}
+subd =: {{ 0 0$img =: 2#"1[2# img}}
